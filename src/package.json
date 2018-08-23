@@ -1,0 +1,19 @@
+{
+    "name": "nodebot-module-utility",
+    "version": "0.1.0",
+    "description": "module utility for nodebot",
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://gitlab.com/trustgit/nodebot-module-utility.git"
+    },
+    "author": "trustgit",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://gitlab.com/trustgit/nodebot-module-utility/issues"
+    },
+    "dependencies": {
+      "js-yaml": "^3.12.0"
+    }
+  }
+  
