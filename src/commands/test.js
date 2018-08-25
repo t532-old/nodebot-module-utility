@@ -1,6 +1,3 @@
-import { safeLoad } from 'js-yaml'
-import { readFileSync } from 'fs'
-const { injectionChecker } = safeLoad(readFileSync('config.yml'))
 export default {
     args: '[txt...]',
     options: [],
@@ -9,5 +6,5 @@ export default {
      * @param {ContentMessage} msg The universal msg object
      * @param {{ txt: string[] }} txt The texts user sends
      */
-    async action(msg, { txt }) { msg.send(txt.filter(i => new RegExp(...injectionChecker).test(i) === false).join(' ')) }
+    async action(msg, { txt }) { msg.send(txt.filter(i => msg.static().injectionChecker.test(i) === false).join(' ')) }
 }

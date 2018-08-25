@@ -1,7 +1,5 @@
 import { safeLoad } from 'js-yaml'
 import { readFileSync } from 'fs'
-import { modLog } from '../../../core/log'
-import { Message } from '../../../core/message/sender'
 const { operators } = safeLoad(readFileSync('config.yml'))
 export default {
     args: '<announcement> [groups...]',
@@ -14,15 +12,15 @@ export default {
      */
     async action(msg, { announcement, groups }, [ type ]) {
         if (operators.includes(msg.param.user_id)) {
-            const groupList = (await Message.groupList()).map(i => i.group_id.toString())
+            const groupList = (await msg.static().groupList()).map(i => i.group_id.toString())
             for (let i of groupList)
                 if (
                     (type === 'include' && groups.includes(i)) ||
                     (type === 'except' && !groups.includes(i)) ||
                     !type
                 ) {
-                    Message.group(i, announcement)
-                    modLog('utility[announce]', `sent announcement ${JSON.stringify(announcement)} to group ${i}`)
+                    msg.static().group(i, announcement)
+                    msg.static().log.modLog('utility[announce]', `sent announcement ${JSON.stringify(announcement)} to group ${i}`)
                 }
         }
     }
