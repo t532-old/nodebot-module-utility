@@ -1,8 +1,5 @@
-import { safeLoad } from 'js-yaml'
-import { readFileSync } from 'fs'
 import { exec } from 'child_process'
 import { promisify } from 'util'
-const { operators } = safeLoad(readFileSync('config.yml'))
 const execPromise = promisify(exec)
 export default {
     args: '<command>',
@@ -13,7 +10,7 @@ export default {
      * @param {{ command: string}} - A batch command
      */
     async action(msg, { command }) {
-        if (operators.includes(msg.param.user_id)) {
+        if (msg.static().config.operators.includes(msg.param.user_id)) {
             let result
             try { result = await execPromise(`chcp 65001 && ${command}`) }
             catch (err) { 

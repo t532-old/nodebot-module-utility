@@ -1,6 +1,3 @@
-import { safeLoad } from 'js-yaml'
-import { readFileSync } from 'fs'
-const { operators } = safeLoad(readFileSync('config.yml'))
 export default {
     args: '<announcement> [groups...]',
     options: ['include', 'except'],
@@ -11,7 +8,7 @@ export default {
      * @param {string[]} type - the filter type
      */
     async action(msg, { announcement, groups }, [ type ]) {
-        if (operators.includes(msg.param.user_id)) {
+        if (msg.static().config.operators.includes(msg.param.user_id)) {
             const groupList = (await msg.static().groupList()).map(i => i.group_id.toString())
             for (let i of groupList)
                 if (
